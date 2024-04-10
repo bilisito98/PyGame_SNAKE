@@ -12,28 +12,28 @@ check_errors = pygame.init()
 if(check_errors[1] > 0):
     print("Error " + check_errors[1])
 else:
-    print("Game Succesfullt init")
+    print("Game Successfully init")
 
-    #init
+# init
 
 pygame.display.set_caption("SNAKE GAME")
-game_window = pygame.display.set_mode(frame_size_x, frame_size_y)
+game_window = pygame.display.set_mode((frame_size_x, frame_size_y))
 
 
-black = pygame.color(0,0,0)
-white = pygame.color(255,255,255)
-red = pygame.color(255,0,0)
-green = pygame.color(0,255,0)
-blue = pygame.color(0,0,255)
+black = pygame.Color(0,0,0)
+white = pygame.Color(255,255,255)
+red = pygame.Color(255,0,0)
+green = pygame.Color(0,255,0)
+blue = pygame.Color(0,0,255)
 
 fps_controller = pygame.time.Clock()
 
 square_size = 20
 
 def init_vars():
-    global head_pos, snake_body, food_pos, food_spawn, score, directiion
+    global head_pos, snake_body, food_pos, food_spawn, score, direction
     direction = "RIGHT"
-    Head_Pos = [120, 60]
+    head_pos = [120, 60]
     snake_body = [[120,60]]
     food_pos = [random.randrange(1,(frame_size_x // square_size)) * square_size,
                 random.randrange(1,(frame_size_y // square_size)) * square_size]
@@ -42,29 +42,29 @@ def init_vars():
 
 init_vars()
 
-def show_score():
-    print("showing score")
+def show_score(color, font, size):
+    score_font = pygame.font.SysFont(font, size)
+    score_surface = score_font.render("Score: " + str(score), True, color)
+    score_rect = score_surface.get_rect()
+    score_rect.midtop = (frame_size_x/10, 15)
+    game_window.blit(score_surface, score_rect)
 
-#game loop
+# game loop
 
 while True:
-    for event in pygame.evvent.get():
+    for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygmae.KEYDOWN:
-            if ( event.key == pygame.K_UP or event.key == ord("w")
-                and direction != "DOWN"):
+        elif event.type == pygame.KEYDOWN:
+            if (event.key == pygame.K_UP or event.key == ord("w")) and direction != "DOWN":
                 direction = "UP"
-            elif ( event.key == pygame.K_DOWN or event.key == ord("s")
-                  and direction != "UP"):
-                  direction = "DOWN"
-            elif ( event.key == pygame.K_LEFT or event.key == ord("a")
-                  and direction != "RIGHT"):
-                  direction = "LEFT"
-            elif ( event.key == pygame.K_LEFT or event.key == ord("d")
-                  and direction != "LEFT"):
-                  direction = "RIGHT"
+            elif (event.key == pygame.K_DOWN or event.key == ord("s")) and direction != "UP":
+                direction = "DOWN"
+            elif (event.key == pygame.K_LEFT or event.key == ord("a")) and direction != "RIGHT":
+                direction = "LEFT"
+            elif (event.key == pygame.K_RIGHT or event.key == ord("d")) and direction != "LEFT":
+                direction = "RIGHT"
 
     if direction == "UP":
         head_pos[1] -= square_size
@@ -84,7 +84,7 @@ while True:
     elif head_pos[1] > frame_size_y - square_size:
         head_pos[1] = 0
 
-    #eating apple
+    # eating apple
     snake_body.insert(0, list(head_pos))
     if head_pos[0] == food_pos[0] and head_pos[1] == food_pos[1]:
         score += 1
@@ -108,12 +108,12 @@ while True:
     pygame.draw.rect(game_window,red, pygame.Rect(food_pos[0], 
                     food_pos[1], square_size, square_size))
     
-    # game over condiditons
+    # game over conditions
 
     for block in snake_body[1:]:
         if head_pos[0] == block[0] and head_pos[1] == block[1]:
             init_vars()
 
-    show_score(1,white, 'consolas', 20)
+    show_score(white, 'consolas', 20)
     pygame.display.update()
     fps_controller.tick(speed)
