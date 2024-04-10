@@ -18,3 +18,8 @@ The game came into homes when Atari released an unofficial version of Blockade f
 EXAMPLE IMAGE:
 
 ![image](https://github.com/bilisito98/PyGame_SNAKE/assets/102624868/20bc6a43-135c-41cc-bfde-26bcac639d78)
+
+
+
+Code guide for the design of a basic game "SNAKEINFINITE", below you can see this open source code for those who want 
+to learn how to use Python with pygame you can install this extencion to compiller, those try this language and other languages in a single game.
